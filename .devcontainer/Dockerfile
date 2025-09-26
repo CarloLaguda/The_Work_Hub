@@ -1,13 +1,14 @@
 # Use Ubuntu 22.04 as base
 FROM ubuntu:22.04
 
-# Install base dependencies (sudo, python, mariadb, and curl for Node.js setup)
+# Install base dependencies (sudo, python, mariadb, curl, and GIT)
 RUN apt-get update && apt-get install -y \
     mariadb-server \
     python3 \
     python3-pip \
     sudo \
     curl \
+    git \
     # Clean up the apt cache
     && rm -rf /var/lib/apt/lists/*
 
@@ -33,7 +34,6 @@ RUN mkdir -p /workspace && chown -R vscode:vscode /workspace
 WORKDIR /workspace
 
 # Copy Python script and requirements (Assuming they are in the correct relative paths)
-# NOTE: The path for create_db.py should be relative to the context (usually the root of your project)
 COPY create_db.py .devcontainer/create_db.py
 COPY requirements.txt requirements.txt
 
