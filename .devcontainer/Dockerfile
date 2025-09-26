@@ -23,10 +23,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - \
 
 # RIMOZIONE: Eliminiamo la creazione manuale dell'utente. Codespaces gestirà l'utente con UID 1000 
 # e i permessi corretti automaticamente, assicurando che la tua identità GitHub sia mappata.
-# RUN groupadd --gid 1000 vscode \
-#     && useradd -m -s /bin/bash --uid 1000 --gid 1000 vscode \
-#     && echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode \
-#     && chmod 0440 /etc/sudoers.d/vscode
+RUN groupadd --gid 1000 vscode \
+     && useradd -m -s /bin/bash --uid 1000 --gid 1000 vscode \
+     && echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode \
+     && chmod 0440 /etc/sudoers.d/vscode
 
 
 # Prepare MariaDB socket (Questo deve essere eseguito da root, quindi lasciamo "mysql" come proprietario)
