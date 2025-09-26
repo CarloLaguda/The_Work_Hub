@@ -31,5 +31,10 @@ COPY requirements.txt /workspace/requirements.txt
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
 
+# Install Node.js (includes npm) and Angular CLI
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g @angular/cli
+
 # Switch to vscode user
 USER vscode
