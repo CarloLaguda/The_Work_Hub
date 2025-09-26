@@ -6,7 +6,7 @@
   "remoteUser": "vscode",
   "workspaceFolder": "/workspace",
   "forwardPorts": [3306],
-  "postStartCommand": "sudo chown -R vscode:vscode /workspace && sudo service mariadb start && sudo mariadb -e \"CREATE DATABASE IF NOT EXISTS WorkHubDB; CREATE USER IF NOT EXISTS 'vscode'@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON WorkHubDB.* TO 'vscode'@'%'; FLUSH PRIVILEGES;\" && python3 .devcontainer/create_db.py && cd /workspace",
+  "postStartCommand": "sudo chown -R vscode:vscode /workspace && sudo service mariadb start && sleep 3 && sudo mariadb -e \"CREATE DATABASE IF NOT EXISTS WorkHubDB; CREATE USER IF NOT EXISTS 'vscode'@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON WorkHubDB.* TO 'vscode'@'%'; FLUSH PRIVILEGES;\" && python3 .devcontainer/create_db.py",
   "extensions": [
     "ms-python.python"
   ]
