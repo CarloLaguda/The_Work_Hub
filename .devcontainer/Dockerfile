@@ -1,14 +1,21 @@
 # Use Ubuntu 22.04 as base
 FROM ubuntu:22.04
 
-# Install dependencies
+# Install base dependencies (sudo, python, mariadb, and curl for Node.js setup)
 RUN apt-get update && apt-get install -y \
     mariadb-server \
     python3 \
     python3-pip \
     sudo \
-    npm install -g @angular/cli \
+    curl \
+    # Clean up the apt cache
     && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js (version 20, including npm) and Angular CLI
+# We use NodeSource repository for a recent, stable Node.js version.
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - \
+    && apt-get install -y nodejs \
+    && npm install -g @angular/cli
 
 # Create vscode user
 RUN groupadd --gid 1000 vscode \
@@ -25,14 +32,13 @@ RUN mkdir -p /workspace && chown -R vscode:vscode /workspace
 # Set working directory
 WORKDIR /workspace
 
-# Copy Python script and requirements
-COPY create_db.py /workspace/.devcontainer/create_db.py
-COPY requirements.txt /workspace/requirements.txt
+# Copy Python script and requirements (Assuming they are in the correct relative paths)
+# NOTE: The path for create_db.py should be relative to the context (usually the root of your project)
+COPY create_db.py .devcontainer/create_db.py
+COPY requirements.txt requirements.txt
 
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
 
-# Install Node.js (includes npm) and Angular CLI
-   
 # Switch to vscode user
 USER vscode
