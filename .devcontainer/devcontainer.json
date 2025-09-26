@@ -1,13 +1,26 @@
 {
-  "name": "MariaDB DevContainer",
+  "name": "MariaDB & Angular DevContainer",
   "build": {
     "dockerfile": "Dockerfile"
   },
+  
+  // Utilizza l'utente "vscode" creato nel Dockerfile
   "remoteUser": "vscode",
+  
+  // Imposta /workspace come directory di lavoro
   "workspaceFolder": "/workspace",
+
+  // Espone la porta di MariaDB
   "forwardPorts": [3306],
-  "postStartCommand": "sudo chown -R vscode:vscode /workspace && sudo service mariadb start && sleep 3 && sudo mariadb -e \"CREATE DATABASE IF NOT EXISTS WorkHubDB; CREATE USER IF NOT EXISTS 'vscode'@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON WorkHubDB.* TO 'vscode'@'%'; FLUSH PRIVILEGES;\" && python3 .devcontainer/create_db.py",
+
+  // Comandi eseguiti DOPO che il container è stato avviato
+  "postStartCommand": "sudo service mariadb start && sleep 3 && sudo mariadb -e \"CREATE DATABASE IF NOT EXISTS WorkHubDB; CREATE USER IF NOT EXISTS 'vscode'@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON WorkHubDB.* TO 'vscode'@'%'; FLUSH PRIVILEGES;\" && python3 .devcontainer/create_db.py",
+  
+  // Estensioni consigliate per lo sviluppo
   "extensions": [
-    "ms-python.python"
+    "ms-python.python",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "angular.ng-template" 
   ]
 }
