@@ -27,18 +27,18 @@ RUN groupadd --gid 1000 vscode \
 # Prepare MariaDB socket
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
-# Create workspace and fix permissions
-RUN mkdir -p /workspace && chown -R vscode:vscode /workspace
+# Create workspace (Il clone avverrà qui automaticamente)
+RUN mkdir -p /workspace
 
 # Set working directory
 WORKDIR /workspace
 
-# Copy Python script and requirements (Assuming they are in the correct relative paths)
+# Copy Python script and requirements (Assicurati che questi permessi siano gestiti correttamente)
 COPY create_db.py .devcontainer/create_db.py
 COPY requirements.txt requirements.txt
 
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
 
-# Switch to vscode user
-USER vscode
+# RIMOZIONE: Lasciamo che Codespaces gestisca il cambio utente e i permessi del volume
+# USER vscode
