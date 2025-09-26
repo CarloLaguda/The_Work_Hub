@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     sudo \
+    npm i -g @angular/cli \
     && rm -rf /var/lib/apt/lists/*
 
 # Create vscode user
